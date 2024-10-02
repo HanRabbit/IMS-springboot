@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itzhy.mapper.RepairMapper">
+
+    <select id="select" resultType="com.itzhy.pojo.Repair">
+select * from repair_item
+ <where>
+     <if test="state!=null">
+         state=#{state}
+     </if>
+<if test="userName!=null">
+    and user_name=#{userName}
+</if>
+ </where>
+    </select>
+    <insert id="insert">
+        insert into repair_item(ITEM_NAME, ITEM_QUANTITY, LOCATION, REASON,state, CREATE_TIME, REPAIR_TIME, USER_NAME) VALUES (#{itemName},#{itemQuantity},#{location},#{reason},#{state},#{createTime},#{repairTime},#{userName})
+    </insert>
+
+    <delete id="delete">
+        delete from repair_item where repair_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+
+    </delete>
+</mapper>
